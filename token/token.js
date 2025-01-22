@@ -7,7 +7,7 @@ export const tokens = {
     INT: "INT",
 
     // Operators
-    ASIGN: "=",
+    ASSIGN: "=",
     PLUS: "+",
 
     // Delimiters
