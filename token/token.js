@@ -1,3 +1,10 @@
+export class Token {
+    constructor(type, literal) {
+        this.type = type;
+        this.literal = literal;
+    }
+}
+
 export const tokens = {
     ILLEGAL: "ILLEGAL",
     EOF: "EOF",
