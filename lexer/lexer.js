@@ -58,6 +58,8 @@ export class Lexer {
                 if (this.#isLetter(this.#ch)) {
                     const literal = this.#readIdentifier();
                     return this.#newToken(lookupIdent(literal), literal);
+                } else if (this.#isDigit(this.#ch)) {
+                    return this.#newToken(tokens.INT, this.#readNumber());
                 } else {
                     tok = this.#newToken(tokens.ILLEGAL, this.#ch);
                 }
@@ -72,7 +74,7 @@ export class Lexer {
     }
 
     #isLetter(ch) {
-        return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_';
+        return "a" <= ch && ch <= "z" || "A" <= ch && ch <= "Z" || ch == "_";
     }
 
     #readIdentifier() {
@@ -85,9 +87,22 @@ export class Lexer {
     }
 
     #skipWhitespace() {
-        while (this.#ch === ' ' || this.#ch === '\t' || this.#ch === '\n' || this.#ch === '\r') {
+        while (this.#ch === " " || this.#ch === "\t" || this.#ch === "\n" || this.#ch === "\r") {
             this.#readChar();
         }
+    }
+
+    #readNumber() {
+        const startPos = this.#position;
+        while (this.#isDigit(this.#ch)) {
+            this.#readChar();
+        }
+
+        return this.#input.slice(startPos, this.#position);
+    }
+
+    #isDigit(ch) {
+        return typeof ch === "string" && ("0" <= ch && ch <= "9");
     }
 }
 
