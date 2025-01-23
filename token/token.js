@@ -32,10 +32,9 @@ export const tokens = {
 }
 
 const keywords = new Map([
-    "fn", tokens.FUNCTION,
-    "let", tokens.LET
+    ["fn", tokens.FUNCTION],
+    ["let", tokens.LET]
 ]);
-
 
 export function lookupIdent(ident) {
     return keywords.get(ident) || tokens.IDENT;
