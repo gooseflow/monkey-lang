@@ -1,4 +1,4 @@
-import { Token, tokens } from "../token/token.js";
+import { lookupIdent, Token, tokens } from "../token/token.js";
 
 export class Lexer {
     #input
@@ -24,6 +24,7 @@ export class Lexer {
 
     nextToken() {
         let tok = {};
+        this.#skipWhitespace();
 
         switch (this.#ch) {
             case "=":
@@ -55,8 +56,8 @@ export class Lexer {
                 break;
             default:
                 if (this.#isLetter(this.#ch)) {
-                    tok.literal = this.#readIdentifier();
-                    return tok;
+                    const literal = this.#readIdentifier();
+                    return this.#newToken(lookupIdent(literal), literal);
                 } else {
                     tok = this.#newToken(tokens.ILLEGAL, this.#ch);
                 }
@@ -81,6 +82,12 @@ export class Lexer {
         }
 
         return this.#input.slice(startPos, this.#position);
+    }
+
+    #skipWhitespace() {
+        while (this.#ch === ' ' || this.#ch === '\t' || this.#ch === '\n' || this.#ch === '\r') {
+            this.#readChar();
+        }
     }
 }
 
