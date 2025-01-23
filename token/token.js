@@ -37,7 +37,7 @@ const keywords = new Map([
 ]);
 
 
-function lookupIdent(ident) {
+export function lookupIdent(ident) {
     return keywords.get(ident) || tokens.IDENT;
 }
 
