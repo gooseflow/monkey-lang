@@ -8,10 +8,10 @@ export class Lexer {
 
     constructor(input) {
         this.#input = input;
-        this.readChar();
+        this.#readChar();
     }
 
-    readChar() {
+    #readChar() {
         if (this.#readPosition >= this.#input.length) {
             this.#ch = 0;
         } else {
@@ -27,40 +27,60 @@ export class Lexer {
 
         switch (this.#ch) {
             case "=":
-                tok = this.newToken(tokens.ASSIGN, this.#ch);
+                tok = this.#newToken(tokens.ASSIGN, this.#ch);
                 break;
             case ";":
-                tok = this.newToken(tokens.SEMICOLON, this.#ch);
+                tok = this.#newToken(tokens.SEMICOLON, this.#ch);
                 break;
             case "(":
-                tok = this.newToken(tokens.LPAREN, this.#ch);
+                tok = this.#newToken(tokens.LPAREN, this.#ch);
                 break;
             case ")":
-                tok = this.newToken(tokens.RPAREN, this.#ch);
+                tok = this.#newToken(tokens.RPAREN, this.#ch);
                 break;
             case ",":
-                tok = this.newToken(tokens.COMMA, this.#ch);
+                tok = this.#newToken(tokens.COMMA, this.#ch);
                 break;
             case "+":
-                tok = this.newToken(tokens.PLUS, this.#ch);
+                tok = this.#newToken(tokens.PLUS, this.#ch);
                 break;
             case "{":
-                tok = this.newToken(tokens.LBRACE, this.#ch);
+                tok = this.#newToken(tokens.LBRACE, this.#ch);
                 break;
             case "}":
-                tok = this.newToken(tokens.RBRACE, this.#ch);
+                tok = this.#newToken(tokens.RBRACE, this.#ch);
                 break;
             case 0:
-                tok = this.newToken(tokens.EOF, "");
+                tok = this.#newToken(tokens.EOF, "");
                 break;
+            default:
+                if (this.#isLetter(this.#ch)) {
+                    tok.literal = this.#readIdentifier();
+                    return tok;
+                } else {
+                    tok = this.#newToken(tokens.ILLEGAL, this.#ch);
+                }
         }
 
-        this.readChar();
+        this.#readChar();
         return tok;
     }
 
-    newToken(tokenType, ch) {
+    #newToken(tokenType, ch) {
         return new Token(tokenType, String(ch));
+    }
+
+    #isLetter(ch) {
+        return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_';
+    }
+
+    #readIdentifier() {
+        const startPos = this.#position;
+        while (this.#isLetter(this.#ch)) {
+            this.#readChar();
+        }
+
+        return this.#input.slice(startPos, this.#position);
     }
 }
 
