@@ -22,13 +22,27 @@ export class Lexer {
         this.#readPosition += 1;
     }
 
+    #peekChar() {
+        if (this.#readPosition >= this.#input.length) {
+            return 0;
+        } else {
+            return this.#input[this.#readPosition];
+        }
+    }
+
     nextToken() {
         let tok = {};
         this.#skipWhitespace();
 
         switch (this.#ch) {
             case "=":
-                tok = this.#newToken(tokens.ASSIGN, this.#ch);
+                if (this.#peekChar() === "=") {
+                    let ch = this.#ch;
+                    this.#readChar();
+                    tok = this.#newToken(tokens.EQ, ch + this.#ch);
+                } else {
+                    tok = this.#newToken(tokens.ASSIGN, this.#ch);
+                }
                 break;
             case ";":
                 tok = this.#newToken(tokens.SEMICOLON, this.#ch);
@@ -49,7 +63,13 @@ export class Lexer {
                 tok = this.#newToken(tokens.MINUS, this.#ch);
                 break;
             case "!":
-                tok = this.#newToken(tokens.BANG, this.#ch);
+                if (this.#peekChar() === "=") {
+                    let ch = this.#ch;
+                    this.#readChar();
+                    tok = this.#newToken(tokens.NOT_EQ, ch + this.#ch);
+                } else {
+                    tok = this.#newToken(tokens.BANG, this.#ch);
+                }
                 break;
             case "*":
                 tok = this.#newToken(tokens.ASTERISK, this.#ch);
