@@ -45,6 +45,24 @@ export class Lexer {
             case "+":
                 tok = this.#newToken(tokens.PLUS, this.#ch);
                 break;
+            case "-":
+                tok = this.#newToken(tokens.MINUS, this.#ch);
+                break;
+            case "!":
+                tok = this.#newToken(tokens.BANG, this.#ch);
+                break;
+            case "*":
+                tok = this.#newToken(tokens.ASTERISK, this.#ch);
+                break;
+            case "/":
+                tok = this.#newToken(tokens.SLASH, this.#ch);
+                break;
+            case "<":
+                tok = this.#newToken(tokens.LT, this.#ch);
+                break;
+            case ">":
+                tok = this.#newToken(tokens.GT, this.#ch);
+                break;
             case "{":
                 tok = this.#newToken(tokens.LBRACE, this.#ch);
                 break;

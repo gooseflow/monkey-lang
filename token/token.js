@@ -16,11 +16,16 @@ export const tokens = {
     // Operators
     ASSIGN: "=",
     PLUS: "+",
+    MINUS: "-",
+    BANG: "!",
+    ASTERISK: "*",
+    SLASH: "/",
+    LT: "<",
+    GT: ">",
 
     // Delimiters
     COMMA: ",",
     SEMICOLON: ";",
-
     LPAREN: "(",
     RPAREN: ")",
     LBRACE: "{",
