@@ -5,6 +5,7 @@ export class Token {
     }
 }
 
+// token type - literal
 export const tokens = {
     ILLEGAL: "ILLEGAL",
     EOF: "EOF",

@@ -5,6 +5,7 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
+    "repl": "node ./main.js",
     "test": "jest"
   },
   "keywords": [],
