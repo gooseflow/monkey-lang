@@ -29,11 +29,21 @@ export const tokens = {
     // Keywords
     FUNCTION: "FUNCTION",
     LET: "LET",
+    TRUE: "TRUE",
+    FALSE: "FALSE",
+    IF: "IF",
+    ELSE: "ELSE",
+    RETURN: "RETURN"
 }
 
 const keywords = new Map([
     ["fn", tokens.FUNCTION],
-    ["let", tokens.LET]
+    ["let", tokens.LET],
+    ["true", tokens.TRUE],
+    ["false", tokens.FALSE],
+    ["if", tokens.IF],
+    ["else", tokens.ELSE],
+    ["return", tokens.RETURN]
 ]);
 
 export function lookupIdent(ident) {
